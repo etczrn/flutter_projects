@@ -95,9 +95,15 @@ class _SessionsScreenState extends State<SessionsScreen> {
   List<Widget> getContent() {
     List<Widget> tiles = [];
     sessions.forEach((session) {
-      tiles.add(ListTile(
-        title: Text(session.description),
-        subtitle: Text('${session.date} - duration ${session.duration} min'),
+      tiles.add(Dismissible(
+        key: UniqueKey(),
+        onDismissed: (_) {
+          helper.deleteSession(session.id).then((value) => updateScreen());
+        },
+        child: ListTile(
+          title: Text(session.description),
+          subtitle: Text('${session.date} - duration ${session.duration} min'),
+        ),
       ));
     });
 
