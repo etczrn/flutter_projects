@@ -10,13 +10,16 @@ class SessionsScreen extends StatefulWidget {
 }
 
 class _SessionsScreenState extends State<SessionsScreen> {
+  List<Session> sessions = [];
   final TextEditingController txtDescription = TextEditingController();
   final TextEditingController txtDuration = TextEditingController();
   final SPHelper helper = SPHelper();
 
   @override
   void initState() {
-    helper.init();
+    helper.init().then((value) {
+      updateScreen();
+    });
     super.initState();
   }
 
@@ -26,7 +29,9 @@ class _SessionsScreenState extends State<SessionsScreen> {
       appBar: AppBar(
         title: Text('Your Training Sessions'),
       ),
-      body: Container(),
+      body: ListView(
+        children: getContent(),
+      ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
@@ -80,5 +85,22 @@ class _SessionsScreenState extends State<SessionsScreen> {
             ],
           );
         });
+  }
+
+  List<Widget> getContent() {
+    List<Widget> tiles = [];
+    sessions.forEach((session) {
+      tiles.add(ListTile(
+        title: Text(session.description),
+        subtitle: Text('${session.date} - duration ${session.duration} min'),
+      ));
+    });
+
+    return tiles;
+  }
+
+  void updateScreen() {
+    sessions = helper.getSessions();
+    setState(() {});
   }
 }
