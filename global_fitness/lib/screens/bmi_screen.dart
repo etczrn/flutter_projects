@@ -10,6 +10,8 @@ class BmiScreen extends StatefulWidget {
 }
 
 class _BmiScreenState extends State<BmiScreen> {
+  final TextEditingController txtHeight = TextEditingController();
+  final TextEditingController txtWeight = TextEditingController();
   final double fontSize = 18;
   String result = '';
   bool isMetric = true;
@@ -17,6 +19,8 @@ class _BmiScreenState extends State<BmiScreen> {
   double? height; // ? means nullable
   double? weight;
   late List<bool> isSelected;
+  String heightMessage = '';
+  String weightMessage = '';
 
   @override
   void initState() {
@@ -26,6 +30,10 @@ class _BmiScreenState extends State<BmiScreen> {
 
   @override
   Widget build(BuildContext context) {
+    heightMessage =
+        'Please insert your height in ' + ((isMetric) ? 'meters' : 'inches');
+    weightMessage =
+        'Please insert your height in ' + ((isMetric) ? 'kilos' : 'pounds');
     return Scaffold(
       appBar: AppBar(title: Text('BMI Calculator')),
       bottomNavigationBar: MenuBottom(),
@@ -44,7 +52,22 @@ class _BmiScreenState extends State<BmiScreen> {
             ],
             isSelected: isSelected,
             onPressed: toggleMeasure,
-          )
+          ),
+          TextField(
+            controller: txtHeight,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(hintText: heightMessage),
+          ),
+          TextField(
+            controller: txtWeight,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(hintText: weightMessage),
+          ),
+          ElevatedButton(
+              onPressed: () {},
+              child:
+                  Text('Calculate BMI', style: TextStyle(fontSize: fontSize))),
+          Text(result, style: TextStyle(fontSize: fontSize)),
         ],
       ),
     );
