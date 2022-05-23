@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'screens/bmi_screen.dart';
 import 'screens/intro_screen.dart';
 
 // entry point
@@ -14,7 +15,11 @@ class GlobalApp extends StatelessWidget {
     // implicit new keyword
     return MaterialApp(
       theme: ThemeData(primarySwatch: Colors.blueGrey),
-      home: IntroScreen(),
+      routes: {
+        '/': (context) => IntroScreen(),
+        '/bmi': (context) => BmiScreen(),
+      },
+      initialRoute: '/',
     );
   }
 }
