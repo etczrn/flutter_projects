@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:global_fitness/data/weather.dart';
 import '../data/http_helper.dart';
 
 class WeatherScreen extends StatefulWidget {
@@ -9,7 +10,7 @@ class WeatherScreen extends StatefulWidget {
 }
 
 class _WeatherScreenState extends State<WeatherScreen> {
-  String result = '';
+  Weather result = Weather('', '', 0, 0, 0, 0);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +18,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
         body: Column(
           children: [
             ElevatedButton(onPressed: getData, child: Text('Get data')),
-            Text(result),
+            Text(result.name),
           ],
         ));
   }
