@@ -23,6 +23,10 @@ class MyApp extends StatelessWidget {
               // padding: const EdgeInsets.all(10.0),
               decoration: const BoxDecoration(
                   color: Colors.red,
+                  gradient: LinearGradient(tileMode: TileMode.clamp, colors: [
+                    Colors.green,
+                    Colors.blue,
+                  ]),
                   // shape: BoxShape.circle,
                   shape: BoxShape.rectangle,
                   borderRadius: BorderRadius.only(
