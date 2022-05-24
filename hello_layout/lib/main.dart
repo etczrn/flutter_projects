@@ -16,10 +16,18 @@ class MyApp extends StatelessWidget {
         body: Column(
           children: [
             Container(
-              color: Colors.orange,
               // child: const Text('Hello container'),
-              width: 100.0,
-              height: 100.0,
+              width: 200.0,
+              height: 200.0,
+              margin: const EdgeInsets.all(100.0),
+              // padding: const EdgeInsets.all(10.0),
+              decoration: const BoxDecoration(
+                  color: Colors.red,
+                  // shape: BoxShape.circle,
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(25.0),
+                      bottomRight: Radius.circular(25.0))),
             )
           ],
         ),
