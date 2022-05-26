@@ -5,20 +5,21 @@ void main() {
 }
 
 void test() {
-  const name = 'Foo';
-  if (name == 'Foo') {
-    print('Yes this is foo');
-  } else if (name == 'Bar') {
-    print('Yes this is bar');
-  } else if (name != 'Foo' || name != 'Bar') {
-    print('No this is neither foo nor bar');
-  } else if (name == 'Foo' && name == 'Bar') {
-    print("This can't be happened");
-    print('Yes this can\'t be happened');
-  } else {
-    print('The name is something else');
-  }
-  if (name == 'Baz') print('Yes this is bar');
+  var age = 20;
+  final halfOfAge = age / 2; // 10.0
+  final doubleTheAge = age * 2;
+  // print(halfOfAge);
+  final ageMinusOne = --age;
+  // print(ageMinusOne); // 19
+  // print(age); // 19
+
+  final agePlusOne = age++;
+  // print({'agePlusOne': agePlusOne}); // 19
+  // print({'age': age}); // 20
+
+  final name = 'foo bar baz ';
+  final nameTimesTwo = name * 2;
+  // print(nameTimesTwo); // foo bar baz foo bar baz
 }
 
 class MyApp extends StatelessWidget {
