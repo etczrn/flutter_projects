@@ -1,6 +1,17 @@
 import 'package:flutter/material.dart';
 
 void main() {
+  // constants
+  // const name = 'Foo';
+  // const age = 42;
+
+  // variables
+  // var name = 'Alex';
+  // name = 'Anthony';
+
+  // final: a variable is like a constant but its value can be changed
+  final name = 'Alex';
+
   runApp(const MyApp());
 }
 
