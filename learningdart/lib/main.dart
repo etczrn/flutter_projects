@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
 
-String getFullName(String firstName, String lastName) {
-  return '$firstName $lastName';
-}
-
-void sum = (int x, int y) => print('sum is ${x + y}');
-
-int sub(int x, int y) => x - y;
-
-String printMyName(String name) => 'My name is $name';
-
 void main() {
   runApp(const MyApp());
+}
+
+void test() {
+  const name = 'Foo';
+  if (name == 'Foo') {
+    print('Yes this is foo');
+  } else if (name == 'Bar') {
+    print('Yes this is bar');
+  } else if (name != 'Foo' || name != 'Bar') {
+    print('No this is neither foo nor bar');
+  } else if (name == 'Foo' && name == 'Bar') {
+    print("This can't be happened");
+    print('Yes this can\'t be happened');
+  } else {
+    print('The name is something else');
+  }
+  if (name == 'Baz') print('Yes this is bar');
 }
 
 class MyApp extends StatelessWidget {
@@ -20,7 +27,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    // print(getFullName('Foo', 'Bar')); // print in debug console
+    test();
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
