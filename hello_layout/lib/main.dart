@@ -16,23 +16,22 @@ class MyApp extends StatelessWidget {
         body: Column(
           children: [
             Container(
-              // child: const Text('Hello container'),
-              width: 200.0,
-              height: 200.0,
-              margin: const EdgeInsets.all(100.0),
-              // padding: const EdgeInsets.all(10.0),
-              decoration: const BoxDecoration(
-                  color: Colors.red,
-                  gradient: LinearGradient(tileMode: TileMode.clamp, colors: [
-                    Colors.green,
-                    Colors.blue,
-                  ]),
-                  // shape: BoxShape.circle,
-                  shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(25.0),
-                      bottomRight: Radius.circular(25.0))),
-            )
+                // child: const Text('Hello container'),
+                width: 300.0,
+                height: 200.0,
+                // child: FlutterLogo(),
+                margin: const EdgeInsets.all(50.0),
+                // padding: const EdgeInsets.all(10.0),
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(colors: [
+                      Colors.pink.shade50,
+                      Colors.pink.shade100,
+                    ]),
+                    image: const DecorationImage(
+                      image: NetworkImage('https://bit.ly/3MLFXl4'),
+                      fit: BoxFit.cover,
+                    ),
+                    shape: BoxShape.circle))
           ],
         ),
       ),
