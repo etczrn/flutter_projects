@@ -4,17 +4,23 @@ void main() {
   runApp(const MyApp());
 }
 
-// Future: Data to be returned in the future
-Future<int> heavyFutureThatMultipliesByTwo(int a) {
-  return Future.delayed(const Duration(seconds: 3), () => a * 2);
+// Streams: An asynchronous "pipe" of data.
+// Sends data from pipe that never ends.
+Stream<String> getName() {
+  return Stream.periodic(const Duration(seconds: 1), (int x) => 'name $x');
 }
 
 void test() async {
-  final bad = heavyFutureThatMultipliesByTwo(10);
-  print(bad); // Instance of 'Future<int>'
+  // bad
+  final value = getName();
+  // print(value); // Instance of '_ControllerStream<String>'
 
-  final good = await heavyFutureThatMultipliesByTwo(10);
-  print(good); // 20 (after 3 seconds)
+  // good
+  await for (final value in getName()) {
+    print(value);
+  }
+
+  print('Stream finished working');
 }
 
 class MyApp extends StatelessWidget {
