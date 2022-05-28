@@ -4,14 +4,12 @@ void main() {
   runApp(const MyApp());
 }
 
-void test(List<String>? names) {
-  // List<String>? names = null;
-  // use the ?.syntax to conditionally invoke a method or property
-  // final numberOfNames = names?.length;
+enum PersonProperties { firstName, lastName, age }
 
-  // if name is null, then define 0
-  final length = names?.length ?? 0;
-  // print(length); // test([]); -> 0
+void test() {
+  // Enumerations: named list of related items
+  print(PersonProperties.firstName); // PersonProperties.firstName
+  print(PersonProperties.firstName.name); // firstName
 }
 
 class MyApp extends StatelessWidget {
@@ -20,7 +18,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    test([]);
+    test();
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
