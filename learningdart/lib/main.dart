@@ -4,23 +4,26 @@ void main() {
   runApp(const MyApp());
 }
 
-// Streams: An asynchronous "pipe" of data.
-// Sends data from pipe that never ends.
-Stream<String> getName() {
-  return Stream.periodic(const Duration(seconds: 1), (int x) => 'name $x');
+// Generators is a function that returns list of things
+// but it internally calculates the data in a very simple way
+// and marked with sync* and async*
+Iterable<int> getOneTwoThree() sync* {
+  yield 1;
+  yield 2;
+  yield 3;
 }
 
-void test() async {
-  // bad
-  final value = getName();
-  // print(value); // Instance of '_ControllerStream<String>'
-
-  // good
-  await for (final value in getName()) {
+void test() {
+  // lazy calculation
+  for (final value in getOneTwoThree()) {
     print(value);
+    // 1
+    // 2
+    // 3
   }
 
-  print('Stream finished working');
+  // entire values
+  print(getOneTwoThree()); // (1, 2, 3)
 }
 
 class MyApp extends StatelessWidget {
