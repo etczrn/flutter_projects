@@ -5,19 +5,25 @@ void main() {
 }
 
 void test() {
-  // Nullable
-  String? name = null;
-  print(name); // null
-  name = 'Foo';
-  print(name); // Foo
+  const String? firstName = null;
+  const String? middleName = null;
+  const String? lastName = 'Baz';
 
-  // The element type 'Null' can't be assigned to the list type 'String'.
-  // List<String> names = ['Foo', 'Bar', null];
+  // How to pick the first non-null value
+  // Bad
+  if (firstName != null) {
+    print('first name is not null');
+  } else if (middleName != null) {
+    print('middle name is not null');
+  } else if (lastName != null) {
+    print('last name is not null');
+  } else {
+    print('all names are null');
+  }
 
-  // names can be sometimes null
-  // if it is not absent, it can contain string or null
-  List<String?>? names = ['Foo', 'Bar', null];
-  names = null;
+  // Good
+  const firstNonNullValue = firstName ?? middleName ?? lastName;
+  print(firstNonNullValue); // Baz
 }
 
 class MyApp extends StatelessWidget {
