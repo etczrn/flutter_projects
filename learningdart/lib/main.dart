@@ -5,21 +5,12 @@ void main() {
 }
 
 void test() {
-  var age = 20;
-  final halfOfAge = age / 2; // 10.0
-  final doubleTheAge = age * 2;
-  // print(halfOfAge);
-  final ageMinusOne = --age;
-  // print(ageMinusOne); // 19
-  // print(age); // 19
+  final names = ['Foo', 'Bar', 'Baz'];
+  final length = names.length;
+  print(length); // 3
 
-  final agePlusOne = age++;
-  // print({'agePlusOne': agePlusOne}); // 19
-  // print({'age': age}); // 20
-
-  final name = 'foo bar baz ';
-  final nameTimesTwo = name * 2;
-  // print(nameTimesTwo); // foo bar baz foo bar baz
+  names.add('My name');
+  print(names.length); // 4
 }
 
 class MyApp extends StatelessWidget {
