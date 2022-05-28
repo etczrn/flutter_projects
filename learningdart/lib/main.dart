@@ -18,17 +18,8 @@ class Person {
 }
 
 void test() {
-  // instance of Person
-  final person = Person();
-  person.run();
-  person.breath();
-
-  // Can't do this
-  // Person.breath();
-
-  final another = Person();
-  print(person.firstname == another.firstname); // true
-  print(person.breath == another.breath); // false
+  // Object: instance of classes
+  final foo = Person();
 }
 
 class MyApp extends StatelessWidget {
