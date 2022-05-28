@@ -4,24 +4,36 @@ void main() {
   runApp(const MyApp());
 }
 
-class Person {
-  final String name;
+// Inheritance
+// to allows you define a class and add more functionality to it
+class LivingThing {
+  void breathe() {
+    print('Living thing is breathing');
+  }
 
-  Person(this.name);
-
-  void printName() {
-    print('I wiil not print the name of this person');
-    print(name);
-    // this keyword basically refers to the current instance of the class
-    // in this case, you can use this.name or name eihter
+  void move() {
+    print('I am moving');
   }
 }
 
-void test() {
-  final foo = Person('Foo Bar');
-  // print(foo.name); // name is instance variable
+// Bad
+// class Cat {
+//   void breathe() {
+//     print('Living thing is breathing');
+//   }
 
-  foo.printName(); // printName is instance method
+//   void move() {
+//     print('I am moving');
+//   }
+// }
+
+// Good
+class Cat extends LivingThing {}
+
+void test() {
+  final cat = Cat();
+  // cat have methods from LivingThing
+  cat.breathe();
 }
 
 class MyApp extends StatelessWidget {
