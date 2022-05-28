@@ -4,9 +4,9 @@ void main() {
   runApp(const MyApp());
 }
 
-// Inheritance
-// to allows you define a class and add more functionality to it
-class LivingThing {
+// abstract class can't be instantiated
+// it is supposed to be inherited by other classes
+abstract class LivingThing {
   void breathe() {
     print('Living thing is breathing');
   }
@@ -16,24 +16,14 @@ class LivingThing {
   }
 }
 
-// Bad
-// class Cat {
-//   void breathe() {
-//     print('Living thing is breathing');
-//   }
-
-//   void move() {
-//     print('I am moving');
-//   }
-// }
-
-// Good
 class Cat extends LivingThing {}
 
 void test() {
   final cat = Cat();
-  // cat have methods from LivingThing
   cat.breathe();
+
+  // you can't do this
+  // final thing = LivingThing();
 }
 
 class MyApp extends StatelessWidget {
