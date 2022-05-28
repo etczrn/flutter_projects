@@ -4,26 +4,14 @@ void main() {
   runApp(const MyApp());
 }
 
-void test() {
-  const String? firstName = null;
-  const String? middleName = null;
-  const String? lastName = 'Baz';
-
-  // How to pick the first non-null value
-  // Bad
-  if (firstName != null) {
-    print('first name is not null');
-  } else if (middleName != null) {
-    print('middle name is not null');
-  } else if (lastName != null) {
-    print('last name is not null');
-  } else {
-    print('all names are null');
-  }
-
-  // Good
-  const firstNonNullValue = firstName ?? middleName ?? lastName;
-  print(firstNonNullValue); // Baz
+void test(String? firstName, String? middleName, String? lastName) {
+  String? name = firstName;
+  name ??= middleName;
+  name ??= lastName;
+  print(name);
+  // test('foo', null, 'baz'); // 'foo'
+  // test(null, null, 'baz'); // 'baz'
+  // test(null, null, null); // null
 }
 
 class MyApp extends StatelessWidget {
@@ -32,7 +20,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    test();
+    test(null, null, null);
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
