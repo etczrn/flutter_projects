@@ -5,12 +5,20 @@ void main() {
 }
 
 void test() {
-  final names = ['Foo', 'Bar', 'Baz'];
-  final length = names.length;
-  print(length); // 3
+  // Sets: List of Unique values
+  // wo elements in a set literal shouldn't be equal.
+  // Change or remove the duplicate element.
+  // final names = {'foo', 'bar', 'baz', 'foo'};
 
-  names.add('My name');
-  print(names.length); // 4
+  const names = {
+    'foo',
+    'bar',
+    'baz',
+  };
+  names.add('foo');
+  names.add('bar');
+  names.add('baz');
+  // print(names); // {foo, bar, baz}
 }
 
 class MyApp extends StatelessWidget {
