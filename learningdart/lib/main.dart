@@ -4,14 +4,14 @@ void main() {
   runApp(const MyApp());
 }
 
-void test(String? firstName, String? middleName, String? lastName) {
-  String? name = firstName;
-  name ??= middleName;
-  name ??= lastName;
-  print(name);
-  // test('foo', null, 'baz'); // 'foo'
-  // test(null, null, 'baz'); // 'baz'
-  // test(null, null, null); // null
+void test(List<String>? names) {
+  // List<String>? names = null;
+  // use the ?.syntax to conditionally invoke a method or property
+  // final numberOfNames = names?.length;
+
+  // if name is null, then define 0
+  final length = names?.length ?? 0;
+  // print(length); // test([]); -> 0
 }
 
 class MyApp extends StatelessWidget {
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    test(null, null, null);
+    test([]);
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
