@@ -5,18 +5,23 @@ void main() {
 }
 
 class Person {
-  // with optional parameters
   final String name;
 
-  // Constructor: Allow you to create an instance of a clss
-  // Create constructor for final fields
   Person(this.name);
+
+  void printName() {
+    print('I wiil not print the name of this person');
+    print(name);
+    // this keyword basically refers to the current instance of the class
+    // in this case, you can use this.name or name eihter
+  }
 }
 
 void test() {
-  // Object: instance of classes
   final foo = Person('Foo Bar');
-  print(foo.name); // Foo Bar
+  // print(foo.name); // name is instance variable
+
+  foo.printName(); // printName is instance method
 }
 
 class MyApp extends StatelessWidget {
