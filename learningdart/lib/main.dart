@@ -5,21 +5,18 @@ void main() {
 }
 
 class Person {
-  final firstname = '';
-  final lastname = '';
+  // with optional parameters
+  final String name;
 
-  void run() {
-    print('Running');
-  }
-
-  void breath() {
-    print('Breathing');
-  }
+  // Constructor: Allow you to create an instance of a clss
+  // Create constructor for final fields
+  Person(this.name);
 }
 
 void test() {
   // Object: instance of classes
-  final foo = Person();
+  final foo = Person('Foo Bar');
+  print(foo.name); // Foo Bar
 }
 
 class MyApp extends StatelessWidget {
