@@ -4,38 +4,12 @@ void main() {
   runApp(const MyApp());
 }
 
-class Cat {
-  final String name;
-  Cat(this.name);
+// Future: Data to be returned in the future
+Future<int> heavyFutureThatMultipliesByTwo(int a) {
+  return Future.delayed(const Duration(seconds: 3), () => a * 2);
 }
 
-class Person {
-  final String firstName;
-  final String lastName;
-
-  Person(this.firstName, this.lastName);
-}
-
-// Adding logic to existing classes
-extension FullName on Person {
-  String get fullName => '$firstName $lastName';
-}
-
-extension Run on Cat {
-  void run() {
-    // cat name means the instance
-    print('Cat $name is running');
-  }
-}
-
-void test() {
-  final meow = Cat('Fluffers');
-  print(meow.name); // Fluffers
-  meow.run(); // Cat Fluffers is running
-
-  final foo = Person('Foo', 'Bar');
-  print(foo.fullName); // Foo Bar
-}
+void test() {}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
