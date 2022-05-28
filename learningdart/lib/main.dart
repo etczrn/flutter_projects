@@ -5,12 +5,19 @@ void main() {
 }
 
 void test() {
-  // keys need to be unique
-  // final person = {'age': 20, 'name': 'Foo', 'age': 30};
-  final person = {'age': 20, 'name': 'Foo'};
-  print(person); // {'age': 20, 'name': 'Foo'}
-  person['name'] = 'FOOOOOO???';
-  print(person); // {'age': 20, 'name': 'FOOOOOO???'}
+  // Nullable
+  String? name = null;
+  print(name); // null
+  name = 'Foo';
+  print(name); // Foo
+
+  // The element type 'Null' can't be assigned to the list type 'String'.
+  // List<String> names = ['Foo', 'Bar', null];
+
+  // names can be sometimes null
+  // if it is not absent, it can contain string or null
+  List<String?>? names = ['Foo', 'Bar', null];
+  names = null;
 }
 
 class MyApp extends StatelessWidget {
