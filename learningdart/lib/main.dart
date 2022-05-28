@@ -7,17 +7,29 @@ void main() {
 class Cat {
   final String name;
   Cat(this.name);
-  factory Cat.fluffBall() {
-    return Cat('Fluff Ball');
-  }
+
+  // We are going to change the functionality of equal equal meaning here.
+  // You can define custom operators on your own classes in Dart.
+  @override
+  bool operator ==(covariant Cat other) => other.name == name;
+
+  // for overriding two equals method
+  @override
+  int get hashCode => name.hashCode;
 }
 
 void test() {
-  final flufferBall = Cat.fluffBall();
-  print(flufferBall.name); // Fluff Ball
-
-  final cat = Cat('What about this?');
-  print(cat.name); // What about this?
+  final cat1 = Cat('Foo');
+  final cat2 = Cat('Foo');
+  if (cat1 == cat2) {
+    print('They are equal');
+  } else {
+    print('They are not equal');
+  }
+  // if we change the implementation of operator ==,
+  // we can change the behavior of ==
+  // with override equals method: They are equal
+  // without override equals method: They are not equal
 }
 
 class MyApp extends StatelessWidget {
