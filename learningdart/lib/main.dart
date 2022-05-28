@@ -7,29 +7,34 @@ void main() {
 class Cat {
   final String name;
   Cat(this.name);
+}
 
-  // We are going to change the functionality of equal equal meaning here.
-  // You can define custom operators on your own classes in Dart.
-  @override
-  bool operator ==(covariant Cat other) => other.name == name;
+class Person {
+  final String firstName;
+  final String lastName;
 
-  // for overriding two equals method
-  @override
-  int get hashCode => name.hashCode;
+  Person(this.firstName, this.lastName);
+}
+
+// Adding logic to existing classes
+extension FullName on Person {
+  String get fullName => '$firstName $lastName';
+}
+
+extension Run on Cat {
+  void run() {
+    // cat name means the instance
+    print('Cat $name is running');
+  }
 }
 
 void test() {
-  final cat1 = Cat('Foo');
-  final cat2 = Cat('Foo');
-  if (cat1 == cat2) {
-    print('They are equal');
-  } else {
-    print('They are not equal');
-  }
-  // if we change the implementation of operator ==,
-  // we can change the behavior of ==
-  // with override equals method: They are equal
-  // without override equals method: They are not equal
+  final meow = Cat('Fluffers');
+  print(meow.name); // Fluffers
+  meow.run(); // Cat Fluffers is running
+
+  final foo = Person('Foo', 'Bar');
+  print(foo.fullName); // Foo Bar
 }
 
 class MyApp extends StatelessWidget {
