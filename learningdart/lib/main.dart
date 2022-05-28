@@ -4,26 +4,34 @@ void main() {
   runApp(const MyApp());
 }
 
-// Generators is a function that returns list of things
-// but it internally calculates the data in a very simple way
-// and marked with sync* and async*
-Iterable<int> getOneTwoThree() sync* {
-  yield 1;
-  yield 2;
-  yield 3;
+class PairOfStrings {
+  final String values1;
+  final String values2;
+
+  PairOfStrings(this.values1, this.values2);
+}
+
+class PairOfIntegers {
+  final int values1;
+  final int values2;
+
+  PairOfIntegers(this.values1, this.values2);
+}
+
+// Generics
+// To avoid re-writing similar code
+
+// T means data type
+class Pair<A, B> {
+  final A values1;
+  final B values2;
+
+  Pair(this.values1, this.values2);
 }
 
 void test() {
-  // lazy calculation
-  for (final value in getOneTwoThree()) {
-    print(value);
-    // 1
-    // 2
-    // 3
-  }
-
-  // entire values
-  print(getOneTwoThree()); // (1, 2, 3)
+  final names = Pair('foo', 'bar');
+  final another = Pair('baz', 20);
 }
 
 class MyApp extends StatelessWidget {
