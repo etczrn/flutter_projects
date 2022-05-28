@@ -4,12 +4,34 @@ void main() {
   runApp(const MyApp());
 }
 
-enum PersonProperties { firstName, lastName, age }
+enum AnimalType { cat, dog, bunny }
 
-void test() {
-  // Enumerations: named list of related items
-  print(PersonProperties.firstName); // PersonProperties.firstName
-  print(PersonProperties.firstName.name); // firstName
+void test(AnimalType animalType) {
+  // Bad
+  if (animalType == AnimalType.cat) {
+    print("Oh I love cats");
+  } else if (animalType == AnimalType.dog) {
+    print("Dogs are so fluffy");
+  } else if (animalType == AnimalType.bunny) {
+    print("Bunnies are cute");
+  } else {
+    print("I don't know this animal");
+  }
+
+  // Good
+  switch (animalType) {
+    case AnimalType.bunny:
+      print("Bunny");
+      break;
+    case AnimalType.cat:
+      print("Cat");
+      break;
+    case AnimalType.dog:
+      print("Dog");
+      break;
+  }
+
+  print('FUNCTIONS IF FINISHED'); // Cat FUNCTIONS IF FINISHED
 }
 
 class MyApp extends StatelessWidget {
@@ -18,7 +40,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    test();
+    test(AnimalType.cat);
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
