@@ -4,26 +4,20 @@ void main() {
   runApp(const MyApp());
 }
 
-// abstract class can't be instantiated
-// it is supposed to be inherited by other classes
-abstract class LivingThing {
-  void breathe() {
-    print('Living thing is breathing');
-  }
-
-  void move() {
-    print('I am moving');
+class Cat {
+  final String name;
+  Cat(this.name);
+  factory Cat.fluffBall() {
+    return Cat('Fluff Ball');
   }
 }
 
-class Cat extends LivingThing {}
-
 void test() {
-  final cat = Cat();
-  cat.breathe();
+  final flufferBall = Cat.fluffBall();
+  print(flufferBall.name); // Fluff Ball
 
-  // you can't do this
-  // final thing = LivingThing();
+  final cat = Cat('What about this?');
+  print(cat.name); // What about this?
 }
 
 class MyApp extends StatelessWidget {
