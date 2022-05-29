@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -71,6 +72,7 @@ class _HomePageState extends State<HomePage> {
           ),
           TextButton(
               onPressed: () async {
+                await Firebase.initializeApp();
                 final email = _email.text;
                 final password = _password.text;
                 final userCredential = FirebaseAuth.instance
