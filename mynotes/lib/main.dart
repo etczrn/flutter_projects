@@ -27,14 +27,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // The keyword 'late' is used to indicate
-  // that the variable has no value right not
-  // but will be assigned a value before it is used
-  // It is kind of like a contact
   late final TextEditingController _email;
   late final TextEditingController _password;
 
-  // Two steps for state: initState and dispose
   @override
   void initState() {
     _email = TextEditingController();
@@ -57,14 +52,15 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Column(
         children: [
-          // If you want to use the content of text field,
-          // you need to use the `controller` property
-          // that grabs the latest information from the text field.
           TextField(
             controller: _email,
+            decoration:
+                const InputDecoration(hintText: 'Enter your email here'),
           ),
           TextField(
             controller: _password,
+            decoration:
+                const InputDecoration(hintText: 'Enter your password here'),
           ),
           TextButton(onPressed: () async {}, child: const Text('Register')),
         ],
