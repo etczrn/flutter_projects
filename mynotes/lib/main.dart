@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 void main() {
+  // to enable widget binding before Firebase.initializeApp
+  // https://docs.flutter.dev/resources/architectural-overview
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -78,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                 final userCredential = FirebaseAuth.instance
                     .createUserWithEmailAndPassword(
                         email: email, password: password);
-                print(userCredential);
+                // print(userCredential);
               },
               child: const Text('Register')),
         ],
