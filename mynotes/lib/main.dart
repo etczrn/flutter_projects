@@ -19,9 +19,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// Scaffold
-// basic building structures of an application
-// that makes it presentable to a user
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -31,6 +28,8 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Register'),
       ),
+      body: Center(
+          child: TextButton(onPressed: () {}, child: const Text('Register'))),
     );
   }
 }
