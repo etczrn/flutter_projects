@@ -10,9 +10,22 @@ part 'weather_state.dart';
 // In other words, this class will handle all the Events triggered by the User
 // and sends the relevant State back to the UI.
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
-  WeatherBloc() : super(WeatherInitial()) {
-    on<WeatherEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+  final _weatherRepository = WeatherRepository();
+  WeatherBloc() : super(WeatherInitial());
+
+  @override
+  Stream<WeatherState> mapEventToState(WeatherEvent event) async* {
+    // we check for different events and return the relevant states to the UI.
+    if (event is WeatherRequest) {
+      yield WeatherLoadInprogress();
+
+      try {
+        final weatherResponse =
+            await _weatherRepository.getWeather(event.cityName);
+        yield WeatherLoadSuccess(weather: weatherResponse);
+      } catch (e) {
+        yield WeatherLoadFailure(error: e.toString());
+      }
+    }
   }
 }
