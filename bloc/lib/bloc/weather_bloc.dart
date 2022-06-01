@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
+import 'package:bloc_test/data/models/weather.dart';
+import 'package:bloc_test/data/repositories/weather_repository.dart';
 import 'dart:async';
 import 'package:meta/meta.dart';
 
