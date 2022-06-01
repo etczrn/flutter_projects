@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cubit/misc/colors.dart';
 import 'package:flutter_cubit/widgets/app_larget_text.dart';
 import 'package:flutter_cubit/widgets/app_text.dart';
+import 'package:flutter_cubit/widgets/responsive_button.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({Key? key}) : super(key: key);
@@ -54,6 +55,10 @@ class _WelcomePageState extends State<WelcomePage> {
                             size: 14,
                           ),
                         ),
+                        const SizedBox(height: 20),
+                        ResponsiveButton(
+                          width: 120,
+                        )
                       ],
                     )
                   ],
