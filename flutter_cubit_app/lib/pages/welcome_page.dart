@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_cubit/widgets/app_larget_text.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({Key? key}) : super(key: key);
@@ -30,6 +31,16 @@ class _WelcomePageState extends State<WelcomePage> {
                 image: DecorationImage(
                     image: AssetImage("img/" + images[index]),
                     fit: BoxFit.cover),
+              ),
+              child: Container(
+                margin: const EdgeInsets.only(top: 150, left: 20, right: 20),
+                child: Row(
+                  children: [
+                    Column(
+                      children: [AppLargetText(text: 'Trips')],
+                    )
+                  ],
+                ),
               ),
             );
           }),
