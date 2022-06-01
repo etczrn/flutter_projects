@@ -1,5 +1,8 @@
 import 'package:bloc_with_joke/presentaion/home/home.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'data/repositories/joke_repository.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,7 +26,10 @@ class MyApp extends StatelessWidget {
           textTheme: ButtonTextTheme.primary,
         ),
       ),
-      home: const Home(),
+      home: RepositoryProvider(
+        create: (context) => JokeRepository(),
+        child: const Home(),
+      ),
     );
   }
 }
