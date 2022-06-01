@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_cubit/misc/colors.dart';
 import 'package:flutter_cubit/widgets/app_larget_text.dart';
+import 'package:flutter_cubit/widgets/app_text.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({Key? key}) : super(key: key);
@@ -37,7 +37,24 @@ class _WelcomePageState extends State<WelcomePage> {
                 child: Row(
                   children: [
                     Column(
-                      children: [AppLargetText(text: 'Trips')],
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        AppLargetText(text: 'Trips'),
+                        AppText(
+                          text: 'Mountain',
+                          size: 30,
+                        ),
+                        const SizedBox(height: 20),
+                        Container(
+                          width: 250,
+                          child: AppText(
+                            text:
+                                'Mountain hikes give you an incredible sense of freedom along with endurance test',
+                            color: AppColors.textColor2,
+                            size: 14,
+                          ),
+                        ),
+                      ],
                     )
                   ],
                 ),
