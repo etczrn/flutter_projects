@@ -1,3 +1,4 @@
+import 'package:delivery/home/food_page_body.dart';
 import 'package:delivery/uitls/colors.dart';
 import 'package:delivery/widgets/big_text.dart';
 import 'package:delivery/widgets/small_text.dart';
@@ -42,6 +43,7 @@ class MainFoodPage extends StatelessWidget {
                 ],
               ),
             ),
+            FoodPageBody(),
           ],
         ),
       ),
