@@ -21,7 +21,12 @@ class MainFoodPage extends StatelessWidget {
                   Column(
                     children: [
                       BigText(text: "Bangladesh", color: AppColors.mainColor),
-                      SmallText(text: 'Marsingdi')
+                      Row(
+                        children: [
+                          SmallText(text: 'Marsingdi'),
+                          Icon(Icons.arrow_drop_down_rounded)
+                        ],
+                      )
                     ],
                   ),
                   Center(
