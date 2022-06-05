@@ -43,6 +43,16 @@ class AuthMethods {
 
         res = 'Success';
       }
+    } on FirebaseException catch (err) {
+      if (err.code == 'invalid-email') {
+        res = 'The email address is badly formatted.';
+      } else if (err.code == 'weak-password') {
+        res = 'Password is too weak.';
+      } else if (err.code == 'email-already-in-use') {
+        res = 'The email address is already in use by another account.';
+      } else if (err.code == 'operation-not-allowed') {
+        res = 'Sign up with email is not enabled';
+      }
     } catch (err) {
       res = err.toString();
     }
