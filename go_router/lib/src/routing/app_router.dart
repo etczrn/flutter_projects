@@ -7,17 +7,28 @@ import 'package:ecommerce_app/src/features/sign_in/email_password_sign_in_state.
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+enum AppRoute {
+  home,
+  cart,
+  orders,
+  signIn,
+  account,
+}
+
 final goRouter = GoRouter(
   initialLocation: '/',
   debugLogDiagnostics: true,
   routes: [
     GoRoute(
       path: '/',
+      name: AppRoute
+          .home.name, // allows to use name and is better than using path
       builder: (context, state) => const ProductsListScreen(),
       routes: [
         // enables to use back button to go back to the previous page
         GoRoute(
           path: 'cart',
+          name: AppRoute.cart.name,
           // builder: (context, state) => const ShoppingCartScreen(),
           pageBuilder: (context, state) => MaterialPage(
             key: state.pageKey,
@@ -27,6 +38,7 @@ final goRouter = GoRouter(
         ),
         GoRoute(
           path: 'orders',
+          name: AppRoute.orders.name,
           pageBuilder: (context, state) => MaterialPage(
             key: state.pageKey,
             fullscreenDialog: true,
@@ -35,6 +47,7 @@ final goRouter = GoRouter(
         ),
         GoRoute(
           path: 'account',
+          name: AppRoute.account.name,
           pageBuilder: (context, state) => MaterialPage(
             key: state.pageKey,
             fullscreenDialog: true,
@@ -43,6 +56,7 @@ final goRouter = GoRouter(
         ),
         GoRoute(
           path: 'signIn',
+          name: AppRoute.signIn.name,
           pageBuilder: (context, state) => MaterialPage(
             key: state.pageKey,
             fullscreenDialog: true,
