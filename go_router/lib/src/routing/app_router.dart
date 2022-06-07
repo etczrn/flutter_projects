@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/src/features/account/account_screen.dart';
 import 'package:ecommerce_app/src/features/orders_list/orders_list_screen.dart';
+import 'package:ecommerce_app/src/features/product_page/product_screen.dart';
 import 'package:ecommerce_app/src/features/products_list/products_list_screen.dart';
 import 'package:ecommerce_app/src/features/shopping_cart/shopping_cart_screen.dart';
 import 'package:ecommerce_app/src/features/sign_in/email_password_sign_in_screen.dart';
@@ -13,6 +14,7 @@ enum AppRoute {
   orders,
   signIn,
   account,
+  product,
 }
 
 final goRouter = GoRouter(
@@ -25,6 +27,14 @@ final goRouter = GoRouter(
           .home.name, // allows to use name and is better than using path
       builder: (context, state) => const ProductsListScreen(),
       routes: [
+        GoRoute(
+          path: 'product/:id',
+          name: AppRoute.product.name,
+          builder: (context, state) {
+            final productId = state.params['id']!;
+            return ProductScreen(productId: productId);
+          },
+        ),
         // enables to use back button to go back to the previous page
         GoRoute(
           path: 'cart',
