@@ -60,6 +60,25 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         physics: const NeverScrollableScrollPhysics(),
         controller: _controller,
         children: [
+          // * The screens in the checkout flow
+          // * represent a user journey
+          // * This is driven by data validation and application state
+          // * We should not be able to switch between screens
+          // * by changing the URL
+          // * We'll keep all screens inside a single route called "checkout"
+
+          // * Nested navigation is useful whenever you have a top or bottom TabBar
+          // * that the user can use to select different tabs.
+          // * In such cases, GoRouter gives you the ability
+          // * to keep the selected tab in sync with the URI in the address bar,
+          // * and this page covers all the details: https://gorouter.dev/nested-navigation
+          // * In practice, nested navigation can be made to work
+          // * as long as you have a TabController or a PageController
+          // * that you can use to control the selected tab.
+          // * One case where nested navigation by URI may not be necessary is
+          // * when you want to take the user through a sequence of pages in order.
+          // * In this case, you can put all the pages inside a PageView widget
+          // * and use a PageController to animate between them.
           EmailPasswordSignInContents(
             formType: EmailPasswordSignInFormType.register,
             onSignedIn: _onSignedIn,
