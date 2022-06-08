@@ -20,7 +20,11 @@ class ShoppingCartIcon extends StatelessWidget {
           child: IconButton(
             key: shoppingCartIconKey,
             icon: const Icon(Icons.shopping_cart),
-            onPressed: () => context.goNamed(AppRoute.cart.name),
+            // * "go" and "goNamed" will take us to the specified route
+            // * (based on the route hierarchy we have defined)
+            // * "push" and "pushNamed" always add a new route
+            // * without altering the underlying navigation stack
+            onPressed: () => context.pushNamed(AppRoute.cart.name),
           ),
         ),
         if (cartItemsCount > 0)
