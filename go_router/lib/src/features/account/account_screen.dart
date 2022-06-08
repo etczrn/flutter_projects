@@ -19,17 +19,24 @@ class AccountScreen extends StatelessWidget {
           ActionTextButton(
             text: 'Logout'.hardcoded,
             onPressed: () async {
-              showNotImplementedAlertDialog(context: context);
-              // final logout = await showAlertDialog(
-              //   context: context,
-              //   title: 'Are you sure?'.hardcoded,
-              //   cancelActionText: 'Cancel'.hardcoded,
-              //   defaultActionText: 'Logout'.hardcoded,
-              // );
-              // if (logout == true) {
-              //   // TODO: Sign out the user.
-              //   Navigator.of(context).pop();
-              // }
+              // showNotImplementedAlertDialog(context: context);
+              final logout = await showAlertDialog(
+                context: context,
+                title: 'Are you sure?'.hardcoded,
+                cancelActionText: 'Cancel'.hardcoded,
+                defaultActionText: 'Logout'.hardcoded,
+              );
+              if (logout == true) {
+                // TODO: Sign out the user.
+                Navigator.of(context).pop();
+                // * Want to pop without returning a value?
+                // * Use context.pop() or Navigator.of(context).pop()
+                // * Want to pop AND return a value?
+                // * Use Navigator.of(context).pop(someValue) only
+                // * Likewise, with GoRouter you can't push a route and await to get a return value,
+                // * because this is incompatible with deep and dynamic linking.
+                // * more details: https://gorouter.dev/user-input
+              }
             },
           ),
         ],
