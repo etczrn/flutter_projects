@@ -13,7 +13,10 @@ class FakeProductsRepository {
     return _products.firstWhere((product) => product.id == id);
   }
 
-  Future<List<Product>> fetchProductsList() {
+  Future<List<Product>> fetchProductsList() async {
+    // Test loading, error state
+    await Future.delayed(const Duration(seconds: 2));
+    // throw Exception();
     return Future.value(_products);
   }
 
