@@ -20,8 +20,9 @@ class FakeProductsRepository {
     return Future.value(_products);
   }
 
-  Stream<List<Product>> watchProductsList() {
-    return Stream.value(_products);
+  Stream<List<Product>> watchProductsList() async* {
+    await Future.delayed(const Duration(seconds: 2));
+    yield _products;
   }
 
   Stream<Product?> watchProduct(String id) {
@@ -49,4 +50,20 @@ final productListStreamProvider = StreamProvider<List<Product>>((ref) {
 final productListFutureProvider = FutureProvider<List<Product>>((ref) {
   final productRepository = ref.watch(productRepositoryProvider);
   return productRepository.fetchProductsList();
+});
+
+// * Need to pass an argument to a provider?
+// * Use the .family modifier
+// * And call 'ref.watch(product(arg))' in your widget
+
+// * Family works with any valid type in Dart
+// * - String, int, double, bool
+// * - Custom classes implementing hashCode and ==
+
+// * If you end up passing a dynamic list or map of values to a family,
+// * you may be doing it wrong
+// * There may be a simpler way of designing your providers
+final productProvider = StreamProvider.family<Product?, String>((ref, id) {
+  final productRepository = ref.watch(productRepositoryProvider);
+  return productRepository.watchProduct(id);
 });
