@@ -10,12 +10,8 @@ class AnimatedOpacityPage extends StatefulWidget {
 class AnimatedOpacityPageState extends State<AnimatedOpacityPage> {
   double _opacity = 1.0;
 
-  final Random random = Random();
-
-  void changeOpacity() {
-    setState(() {
-      _opacity = random.nextDouble();
-    });
+  void _toggleOpacity() {
+    setState(() => _opacity = _opacity == 0 ? 1.0 : 0.0);
   }
 
   @override
@@ -37,7 +33,7 @@ class AnimatedOpacityPageState extends State<AnimatedOpacityPage> {
             ElevatedButton(
               child: Text('Fade Logo'),
               // TODO: Implement
-              onPressed: changeOpacity,
+              onPressed: _toggleOpacity,
             ),
           ],
         ),
