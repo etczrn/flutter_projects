@@ -3,9 +3,6 @@ import 'package:ecommerce_app/src/features/products/domain/product.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class FakeProductsRepository {
-  FakeProductsRepository._();
-  static FakeProductsRepository instance = FakeProductsRepository._();
-
   final List<Product> _products = kTestProducts;
 
   List<Product> getProductsList() {
@@ -38,5 +35,5 @@ class FakeProductsRepository {
 // * The anonymous function can be quite complex
 // * and we can use the ref object to access other providers as dependencies
 final productRepositoryProvider = Provider<FakeProductsRepository>((ref) {
-  return FakeProductsRepository.instance;
+  return FakeProductsRepository();
 });

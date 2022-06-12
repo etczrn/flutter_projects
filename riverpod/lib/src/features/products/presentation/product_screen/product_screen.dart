@@ -13,6 +13,7 @@ import 'package:ecommerce_app/src/common_widgets/responsive_center.dart';
 import 'package:ecommerce_app/src/common_widgets/responsive_two_column_layout.dart';
 import 'package:ecommerce_app/src/constants/app_sizes.dart';
 import 'package:ecommerce_app/src/features/products/domain/product.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Shows the product page for a given product ID.
 class ProductScreen extends StatelessWidget {
@@ -21,23 +22,42 @@ class ProductScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Read from data source
-    final product = FakeProductsRepository.instance.getProduct(productId);
     return Scaffold(
       appBar: const HomeAppBar(),
-      body: product == null
-          ? EmptyPlaceholderWidget(
-              message: 'Product not found'.hardcoded,
-            )
-          : CustomScrollView(
-              slivers: [
-                ResponsiveSliverCenter(
-                  padding: const EdgeInsets.all(Sizes.p16),
-                  child: ProductDetails(product: product),
-                ),
-                ProductReviewsList(productId: productId),
-              ],
-            ),
+      // * ConsumerWidget vs Consumer
+      // * - ConsumerWidget -> everything in the build method will rebuild
+      // * if the provider value changes
+      // * - Consumer -> only code inside the builder will rebuild
+      // * (more fine-grained control)
+      body: Consumer(
+        builder: ((context, ref, _) {
+          // * ref.watch(provider) will cause the widget to rebuild
+          // * if the provider value changes (and this is what we want)
+          // * For performance reasons, we only want to rebuild the widgets
+          // * that depend on our provider (appbar, scaffold don't depend on it)
+          // * So we wrap the widget that depends on the provider in a Consumer
+          // * and move content of child into builder function
+          // * Also, move productRepository and product into builder function
+          // * This way, the widget in the Consumer widget will only rebuild
+          // * when the provider value changes
+          final productRepository = ref.watch(productRepositoryProvider);
+          final product = productRepository.getProduct(productId);
+
+          return product == null
+              ? EmptyPlaceholderWidget(
+                  message: 'Product not found'.hardcoded,
+                )
+              : CustomScrollView(
+                  slivers: [
+                    ResponsiveSliverCenter(
+                      padding: const EdgeInsets.all(Sizes.p16),
+                      child: ProductDetails(product: product),
+                    ),
+                    ProductReviewsList(productId: productId),
+                  ],
+                );
+        }),
+      ),
     );
   }
 }
