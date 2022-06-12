@@ -14,6 +14,11 @@ void main() async {
     // turn off the # in the URLs on the web
     GoRouter.setUrlPathStrategy(UrlPathStrategy.path);
     // * Entry point of the app
+    // * ProviderScope widget stores state of all providers
+    // * It's critical that we add a ProviderScope at the
+    // * root of the widget tree
+    // * This maintains the state of all the providers
+    // * that we will create in our app
     runApp(const ProviderScope(child: MyApp()));
 
     // * This code will present some error UI if any uncaught exception happens
