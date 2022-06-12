@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/src/constants/test_products.dart';
 import 'package:ecommerce_app/src/features/products/domain/product.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class FakeProductsRepository {
@@ -42,12 +43,18 @@ final productRepositoryProvider = Provider<FakeProductsRepository>((ref) {
   return FakeProductsRepository();
 });
 
-final productListStreamProvider = StreamProvider<List<Product>>((ref) {
+// * Whenever you use streamProvider, use autoDispose to close the connection
+// * to the stream when no longer needed (FutureProvider as well)
+final productListStreamProvider =
+    StreamProvider.autoDispose<List<Product>>((ref) {
+  // debugPrint('created productListStreamProvider');
   final productRepository = ref.watch(productRepositoryProvider);
   return productRepository.watchProductsList();
 });
 
-final productListFutureProvider = FutureProvider<List<Product>>((ref) {
+final productListFutureProvider =
+    FutureProvider.autoDispose<List<Product>>((ref) {
+  // debugPrint('created productListFutureProvider');
   final productRepository = ref.watch(productRepositoryProvider);
   return productRepository.fetchProductsList();
 });
@@ -63,7 +70,13 @@ final productListFutureProvider = FutureProvider<List<Product>>((ref) {
 // * If you end up passing a dynamic list or map of values to a family,
 // * you may be doing it wrong
 // * There may be a simpler way of designing your providers
-final productProvider = StreamProvider.family<Product?, String>((ref, id) {
-  final productRepository = ref.watch(productRepositoryProvider);
-  return productRepository.watchProduct(id);
-});
+final productProvider = StreamProvider.autoDispose.family<Product?, String>(
+  (ref, id) {
+    // debugPrint('created productProvider with id: $id');
+    // ref.onDispose(() => debugPrint('disposed productProvider with id: $id'));
+    final productRepository = ref.watch(productRepositoryProvider);
+    return productRepository.watchProduct(id);
+  },
+  disposeDelay: const Duration(seconds: 10),
+  cacheTime: const Duration(seconds: 10),
+);
