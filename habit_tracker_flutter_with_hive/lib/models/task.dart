@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import 'package:uuid/uuid.dart';
 
 // * This will tell Dart that the current file
 // * that is called task.dart should also include all the code
@@ -23,4 +24,10 @@ class Task {
   // final bool completed;
 
   Task({required this.id, required this.name, required this.iconName});
+
+  factory Task.create({required String name, required String iconName}) {
+    final id = Uuid().v1();
+
+    return Task(id: id, name: name, iconName: iconName);
+  }
 }

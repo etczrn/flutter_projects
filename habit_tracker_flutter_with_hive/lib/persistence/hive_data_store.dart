@@ -19,11 +19,15 @@ class HiveDataStore {
 
   Future<void> createDemoTasks({
     required List<Task> tasks,
+    bool force = false,
   }) async {
     final box = Hive.box<Task>(tasksBoxName);
-    if (box.isEmpty) {
+    if (box.isEmpty || force) {
+      await box.clear();
       // * All the data will be added to this box and persisted to local storage
       await box.addAll(tasks);
+    } else {
+      print('Box already has ${box.length} iems');
     }
   }
 }

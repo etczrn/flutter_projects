@@ -14,8 +14,16 @@ Future<void> main() async {
   // * Below takes care of initializing our data store
   final dataStore = HiveDataStore();
   await dataStore.init();
+  // * Below code will create 6 tasks and store them with Hive
+  // * the first time the application starts.
   await dataStore.createDemoTasks(tasks: [
-    Task(id: '1', name: 'Walk the dog', iconName: AppAssets.dog),
+    Task.create(name: 'Walk the dog', iconName: AppAssets.dog),
+    Task.create(name: 'Eat a Healthy Meal', iconName: AppAssets.carrot),
+    Task.create(name: 'Walk the Dog', iconName: AppAssets.dog),
+    Task.create(name: 'Do Some Coding', iconName: AppAssets.html),
+    Task.create(name: 'Meditate', iconName: AppAssets.meditation),
+    Task.create(name: 'Do 10 Pushups', iconName: AppAssets.pushups),
+    Task.create(name: 'Sleep 8 Hours', iconName: AppAssets.rest),
   ]);
   runApp(MyApp());
 }
