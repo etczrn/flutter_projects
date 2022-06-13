@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:habit_tracker_flutter/models/task.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -29,5 +30,11 @@ class HiveDataStore {
     } else {
       print('Box already has ${box.length} iems');
     }
+  }
+
+  // * Ideally our widgets shouldn't use Hive directly
+  // * Hive is an 'implementation detail' of our data persistence layer
+  ValueListenable<Box<Task>> tasksListenable() {
+    return Hive.box<Task>(tasksBoxName).listenable();
   }
 }
