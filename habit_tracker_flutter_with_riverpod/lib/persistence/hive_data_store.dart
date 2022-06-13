@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:habit_tracker_flutter/models/task.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -31,3 +32,11 @@ class HiveDataStore {
     return Hive.box<Task>(tasksBoxName).listenable();
   }
 }
+
+// * Second: Create provider
+// * Provider is a box that contains an object of a certain type.
+// * Once we have created a provider, we can assign a provider to a global identifier
+// * that can be accessed by reference
+final dataStoreProvider = Provider<HiveDataStore>((ref) {
+  return HiveDataStore();
+});
