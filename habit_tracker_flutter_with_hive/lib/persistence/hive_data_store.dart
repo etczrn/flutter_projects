@@ -3,9 +3,9 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class HiveDataStore {
-  Future<void> init() async {
-    const tasksBoxName = 'tasks';
+  static const tasksBoxName = 'tasks';
 
+  Future<void> init() async {
     // * First: initialize Hive
     await Hive.initFlutter();
 
@@ -15,5 +15,15 @@ class HiveDataStore {
     // * Third: Open boxes
     // * The name is used when reading/writing data
     await Hive.openBox<Task>(tasksBoxName);
+  }
+
+  Future<void> createDemoTasks({
+    required List<Task> tasks,
+  }) async {
+    final box = Hive.box<Task>(tasksBoxName);
+    if (box.isEmpty) {
+      // * All the data will be added to this box and persisted to local storage
+      await box.addAll(tasks);
+    }
   }
 }

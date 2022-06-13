@@ -22,5 +22,5 @@ class Task {
   final String iconName;
   // final bool completed;
 
-  Task(this.id, this.name, this.iconName);
+  Task({required this.id, required this.name, required this.iconName});
 }
