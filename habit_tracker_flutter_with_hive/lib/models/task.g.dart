@@ -10,8 +10,6 @@ class TaskAdapter extends TypeAdapter<Task> {
   @override
   final int typeId = 0;
 
-  // * These methods (read, write) are used to serialize or deserialize any objects of type tasks
-  // * when reading and writing to local file
   @override
   Task read(BinaryReader reader) {
     final numOfFields = reader.readByte();
@@ -19,9 +17,9 @@ class TaskAdapter extends TypeAdapter<Task> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Task(
-      fields[0] as String,
-      fields[1] as String,
-      fields[2] as String,
+      id: fields[0] as String,
+      name: fields[1] as String,
+      iconName: fields[2] as String,
     );
   }
 
