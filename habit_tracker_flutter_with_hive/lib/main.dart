@@ -17,14 +17,18 @@ Future<void> main() async {
   // * Below code will create 6 tasks and store them with Hive
   // * the first time the application starts.
   await dataStore.createDemoTasks(tasks: [
-    Task.create(name: 'Walk the dog', iconName: AppAssets.dog),
-    Task.create(name: 'Eat a Healthy Meal', iconName: AppAssets.carrot),
-    Task.create(name: 'Walk the Dog', iconName: AppAssets.dog),
-    Task.create(name: 'Do Some Coding', iconName: AppAssets.html),
-    Task.create(name: 'Meditate', iconName: AppAssets.meditation),
-    Task.create(name: 'Do 10 Pushups', iconName: AppAssets.pushups),
-    Task.create(name: 'Sleep 8 Hours', iconName: AppAssets.rest),
-  ]);
+    // Task.create(name: 'Walk the dog', iconName: AppAssets.dog),
+    // Task.create(name: 'Eat a Healthy Meal', iconName: AppAssets.carrot),
+    // Task.create(name: 'Walk the Dog', iconName: AppAssets.dog),
+    // Task.create(name: 'Do Some Coding', iconName: AppAssets.html),
+    // Task.create(name: 'Meditate', iconName: AppAssets.meditation),
+    // Task.create(name: 'Do 10 Pushups', iconName: AppAssets.pushups),
+    // Task.create(name: 'Sleep 8 Hours', iconName: AppAssets.rest),
+    Task.create(name: 'Go Swimming', iconName: AppAssets.swimmer),
+    Task.create(name: 'Do Some Stretches', iconName: AppAssets.stretching),
+    Task.create(name: 'Play Sports', iconName: AppAssets.basketball),
+    Task.create(name: 'Spend Time Outside', iconName: AppAssets.sun),
+  ], force: true);
   runApp(MyApp());
 }
 
