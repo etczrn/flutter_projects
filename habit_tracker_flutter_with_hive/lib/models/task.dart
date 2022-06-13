@@ -1,5 +1,12 @@
 import 'package:hive/hive.dart';
 
+// * This will tell Dart that the current file
+// * that is called task.dart should also include all the code
+// * that is found inside task.g.dart where G stands for generated.
+// * Use this command after import 'task.g.dart':
+// * flutter pub run build_runner build --delete-conflicting-outputs
+part 'task.g.dart';
+
 // * TypeId should be different for each model class that we want to use in Hive.
 @HiveType(typeId: 0)
 class Task {
