@@ -38,5 +38,6 @@ class HiveDataStore {
 // * Once we have created a provider, we can assign a provider to a global identifier
 // * that can be accessed by reference
 final dataStoreProvider = Provider<HiveDataStore>((ref) {
-  return HiveDataStore();
+  // return HiveDataStore();
+  throw UnimplementedError();
 });

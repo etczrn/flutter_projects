@@ -10,6 +10,15 @@ import 'package:habit_tracker_flutter/ui/theming/app_theme.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await AppAssets.preloadSVGs();
+
+  // * The HomePage can now access the HiveDataStore with ref.watch(),
+  // * but in the main() file we're still creating a separate HiveDataStore.
+  // * We can address this by using a dependency override:
+  // * 1. Create the HiveDataStore just onece
+  // * (and make it available with a data store provider)
+  // * 2. This is created asynchronously,
+  // * so the provider should 'throw UnimplementedError()' by default
+  // * 3. Override the provider once the data store is created and initialized
   final dataStore = HiveDataStore();
   await dataStore.init();
   await dataStore.createDemoTasks(
@@ -26,6 +35,9 @@ Future<void> main() async {
   // * First: Wrap the entire app in a Provider.
   // * ProviderScope is a container for all the providers that we will use in out app.
   runApp(ProviderScope(
+    overrides: [
+      dataStoreProvider.overrideWithValue(dataStore),
+    ],
     child: MyApp(),
   ));
 }
