@@ -1,5 +1,5 @@
 import 'package:ecommerce_app/src/common_widgets/alert_dialogs.dart';
-import 'package:ecommerce_app/src/features/authentication/data/fake_auth_repository.dart';
+import 'package:ecommerce_app/src/features/authentication/presentation/account/account_screen_controller.dart';
 import 'package:ecommerce_app/src/localization/string_hardcoded.dart';
 import 'package:ecommerce_app/src/features/authentication/domain/app_user.dart';
 import 'package:flutter/material.dart';
@@ -14,38 +14,36 @@ class AccountScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // * The state of a StateNotifierProvider can be watched
+    // * like any other provider in the build method:
+    final state = ref.watch(accountScreenControllerProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Account'.hardcoded),
+        title: state.isLoading
+            ? const CircularProgressIndicator()
+            : Text('Account'.hardcoded),
         actions: [
           ActionTextButton(
             text: 'Logout'.hardcoded,
-            onPressed: () async {
-              final logout = await showAlertDialog(
-                context: context,
-                title: 'Are you sure?'.hardcoded,
-                cancelActionText: 'Cancel'.hardcoded,
-                defaultActionText: 'Logout'.hardcoded,
-              );
-              if (logout == true) {
-                // * If we want to call methods inside our auth repository,
-                // * we need to access the corresponding provider with ref.read
-
-                // * ref.read() vs ref.watch()
-                // * Use ref.watch() inside build() mthod
-                // * to rebuild a widget when data changes
-                // * Use ref.read() inside button callbacks
-                // * to "do something"
-                await ref.read(authRepositoryProvider).signOut();
-                // * However, this code will only handle the happy path.
-                // * But we also need to think about the loading and error states by:
-                // * - checking if signOut() succeeds or throws an error.
-                // * - showing some loading UI and disable the logout button
-                // * while the sign-out is in progress
-                // TODO: only pop on success
-                Navigator.of(context).pop();
-              }
-            },
+            onPressed: state.isLoading
+                ? null
+                : () async {
+                    final logout = await showAlertDialog(
+                      context: context,
+                      title: 'Are you sure?'.hardcoded,
+                      cancelActionText: 'Cancel'.hardcoded,
+                      defaultActionText: 'Logout'.hardcoded,
+                    );
+                    if (logout == true) {
+                      // * To access the StateNotifier itself,
+                      // * use .notifier inside a call to ref.read
+                      await ref
+                          .read(accountScreenControllerProvider.notifier)
+                          .signOut();
+                      // TODO: only pop on success
+                      Navigator.of(context).pop();
+                    }
+                  },
           ),
         ],
       ),
