@@ -2,6 +2,7 @@ import 'package:ecommerce_app/src/common_widgets/alert_dialogs.dart';
 import 'package:ecommerce_app/src/features/authentication/presentation/account/account_screen_controller.dart';
 import 'package:ecommerce_app/src/localization/string_hardcoded.dart';
 import 'package:ecommerce_app/src/features/authentication/domain/app_user.dart';
+import 'package:ecommerce_app/src/utils/async_value.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/src/common_widgets/action_text_button.dart';
 import 'package:ecommerce_app/src/common_widgets/responsive_center.dart';
@@ -14,26 +15,9 @@ class AccountScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // * Use ref.listen() to run some code when the state changes
-    // * (without rebuilding the widget)
-    // * and make sure to check state.isRefreshing if needed
-
-    // * Provider listeners are quite useful when you want to show a SnackBar
-    // * or error alert in response to a state change.
-    // * To use them, call ref.listen by passing a provider, and use the state as needed:
     ref.listen<AsyncValue<void>>(accountScreenControllerProvider,
-        (previousState, state) {
-      // * Note that if the previous state was error and the current state is loading,
-      // * state.hasError will return true.
-      // * To account for this, make sure to check the value of state.isRefreshing as well.
-      if (!state.isRefreshing && state.hasError) {
-        showExceptionAlertDialog(
-            context: context, title: 'Error'.hardcoded, exception: state.error);
-      }
-    });
+        (_, state) => state.showAlertDialogOnError(context));
 
-    // * Use ref.watch() inside the build method
-    // * to watch a provider and rebuild when the state changes
     final state = ref.watch(accountScreenControllerProvider);
     return Scaffold(
       appBar: AppBar(
