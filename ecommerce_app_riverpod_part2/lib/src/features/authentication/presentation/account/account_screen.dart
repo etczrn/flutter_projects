@@ -14,8 +14,26 @@ class AccountScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // * The state of a StateNotifierProvider can be watched
-    // * like any other provider in the build method:
+    // * Use ref.listen() to run some code when the state changes
+    // * (without rebuilding the widget)
+    // * and make sure to check state.isRefreshing if needed
+
+    // * Provider listeners are quite useful when you want to show a SnackBar
+    // * or error alert in response to a state change.
+    // * To use them, call ref.listen by passing a provider, and use the state as needed:
+    ref.listen<AsyncValue<void>>(accountScreenControllerProvider,
+        (previousState, state) {
+      // * Note that if the previous state was error and the current state is loading,
+      // * state.hasError will return true.
+      // * To account for this, make sure to check the value of state.isRefreshing as well.
+      if (!state.isRefreshing && state.hasError) {
+        showExceptionAlertDialog(
+            context: context, title: 'Error'.hardcoded, exception: state.error);
+      }
+    });
+
+    // * Use ref.watch() inside the build method
+    // * to watch a provider and rebuild when the state changes
     final state = ref.watch(accountScreenControllerProvider);
     return Scaffold(
       appBar: AppBar(
@@ -35,13 +53,13 @@ class AccountScreen extends ConsumerWidget {
                       defaultActionText: 'Logout'.hardcoded,
                     );
                     if (logout == true) {
-                      // * To access the StateNotifier itself,
-                      // * use .notifier inside a call to ref.read
+                      // * Use ref.read() inside callbacks to access a provider
+                      // * and call methods on the underlying object
                       await ref
                           .read(accountScreenControllerProvider.notifier)
                           .signOut();
                       // TODO: only pop on success
-                      Navigator.of(context).pop();
+                      // Navigator.of(context).pop();
                     }
                   },
           ),
