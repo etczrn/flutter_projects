@@ -1,17 +1,19 @@
 import 'package:ecommerce_app/src/common_widgets/alert_dialogs.dart';
+import 'package:ecommerce_app/src/features/authentication/data/fake_auth_repository.dart';
 import 'package:ecommerce_app/src/localization/string_hardcoded.dart';
 import 'package:ecommerce_app/src/features/authentication/domain/app_user.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/src/common_widgets/action_text_button.dart';
 import 'package:ecommerce_app/src/common_widgets/responsive_center.dart';
 import 'package:ecommerce_app/src/constants/app_sizes.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Simple account screen showing some user info and a logout button.
-class AccountScreen extends StatelessWidget {
+class AccountScreen extends ConsumerWidget {
   const AccountScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Account'.hardcoded),
@@ -26,7 +28,21 @@ class AccountScreen extends StatelessWidget {
                 defaultActionText: 'Logout'.hardcoded,
               );
               if (logout == true) {
-                // TODO: Sign out the user.
+                // * If we want to call methods inside our auth repository,
+                // * we need to access the corresponding provider with ref.read
+
+                // * ref.read() vs ref.watch()
+                // * Use ref.watch() inside build() mthod
+                // * to rebuild a widget when data changes
+                // * Use ref.read() inside button callbacks
+                // * to "do something"
+                await ref.read(authRepositoryProvider).signOut();
+                // * However, this code will only handle the happy path.
+                // * But we also need to think about the loading and error states by:
+                // * - checking if signOut() succeeds or throws an error.
+                // * - showing some loading UI and disable the logout button
+                // * while the sign-out is in progress
+                // TODO: only pop on success
                 Navigator.of(context).pop();
               }
             },
