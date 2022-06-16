@@ -55,11 +55,17 @@ class AccountScreen extends ConsumerWidget {
                     if (logout == true) {
                       // * Use ref.read() inside callbacks to access a provider
                       // * and call methods on the underlying object
-                      await ref
+                      final success = await ref
                           .read(accountScreenControllerProvider.notifier)
                           .signOut();
-                      // TODO: only pop on success
-                      // Navigator.of(context).pop();
+                      if (success) {
+                        // * We should only dismiss the account page and pop the navigator
+                        // * if the signOut() method has succeeded:
+                        // * And the reason why this logic is inside the onPressed method is
+                        // * that controllers should NEVER depend on the BuildContext or
+                        // * anything to do with the UI.
+                        Navigator.of(context).pop();
+                      }
                     }
                   },
           ),
