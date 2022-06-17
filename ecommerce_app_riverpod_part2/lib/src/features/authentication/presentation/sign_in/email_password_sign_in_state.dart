@@ -20,6 +20,9 @@ class EmailPasswordSignInState with EmailAndPasswordValidators {
     this.isLoading = false,
   });
 
+  // * IMPORTANT: state classes should be immutable
+  // * Make all properties "final" (you can also mark your class as @immutable)
+  // * - This way you won't modify them by mistake in the widgets
   final EmailPasswordSignInFormType formType;
   final bool isLoading;
 
@@ -38,6 +41,9 @@ class EmailPasswordSignInState with EmailAndPasswordValidators {
     return 'EmailPasswordSignInState(formType: $formType, isLoading: $isLoading)';
   }
 
+  // * IMPORTANT: implement == and hashCod
+  // * Riverpod, Bloc, Reducx etc. rely on this to know if two objects "are the same"
+  // * Also necessary for testing
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
