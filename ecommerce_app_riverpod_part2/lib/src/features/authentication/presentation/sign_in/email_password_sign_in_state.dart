@@ -1,3 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:ecommerce_app/src/features/authentication/presentation/sign_in/string_validators.dart';
 import 'package:ecommerce_app/src/localization/string_hardcoded.dart';
 
@@ -17,46 +20,50 @@ mixin EmailAndPasswordValidators {
 class EmailPasswordSignInState with EmailAndPasswordValidators {
   EmailPasswordSignInState({
     this.formType = EmailPasswordSignInFormType.signIn,
-    this.isLoading = false,
+    this.value = const AsyncValue.data(null),
   });
 
   // * IMPORTANT: state classes should be immutable
   // * Make all properties "final" (you can also mark your class as @immutable)
   // * - This way you won't modify them by mistake in the widgets
   final EmailPasswordSignInFormType formType;
-  final bool isLoading;
+
+  // * The EmailPasswordSignInState has a bool isLoading property that can be set to true during the sign-in process.
+  // * But this doesn't carry information about error state, and it's better to use AsyncValue instead.
+  // * As a result, the class can be updated like this:
+  final AsyncValue<void> value;
+  // As an alternative, you may wonder if the whole class could be replaced with AsyncValue<EmailPasswordSignInFormType> instead.
+  //This should be possible, since Riverpod 2.0 we can show the data/error when a provider is being refreshed.
+  //But for this example we'll continue using EmailPasswordSignInState as I wanted to show how to create a custom state class
+  //(and how to use it in the coming lessons).
+
+  bool get isLoading => value.isLoading;
 
   EmailPasswordSignInState copyWith({
     EmailPasswordSignInFormType? formType,
-    bool? isLoading,
+    AsyncValue<void>? value,
   }) {
     return EmailPasswordSignInState(
       formType: formType ?? this.formType,
-      isLoading: isLoading ?? this.isLoading,
+      value: value ?? this.value,
     );
   }
 
   @override
-  String toString() {
-    return 'EmailPasswordSignInState(formType: $formType, isLoading: $isLoading)';
-  }
+  String toString() =>
+      'EmailPasswordSignInState(formType: $formType, value: $value)';
 
-  // * IMPORTANT: implement == and hashCod
-  // * Riverpod, Bloc, Reducx etc. rely on this to know if two objects "are the same"
-  // * Also necessary for testing
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
     return other is EmailPasswordSignInState &&
         other.formType == formType &&
-        other.isLoading == isLoading;
+        other.value == value;
   }
 
   @override
-  int get hashCode {
-    return formType.hashCode ^ isLoading.hashCode;
-  }
+  int get hashCode => formType.hashCode ^ value.hashCode;
 }
 
 extension EmailPasswordSignInStateX on EmailPasswordSignInState {
