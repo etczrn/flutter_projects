@@ -121,8 +121,9 @@ class _EmailPasswordSignInContentsState
 
   @override
   Widget build(BuildContext context) {
-    ref.listen<EmailPasswordSignInState>(
-        emailPasswordSignInControllerProvider(widget.formType),
+    ref.listen<AsyncValue>(
+        emailPasswordSignInControllerProvider(widget.formType)
+            .select((state) => state.value),
         (_, state) => state.value.showAlertDialogOnError(context));
     final state =
         ref.watch(emailPasswordSignInControllerProvider(widget.formType));
