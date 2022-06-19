@@ -1,10 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// for complex thing, use state notifier
-// but for now, state provider is okay
-// autoDispose resets the state when the widget is removed from the tree
-final counterProvider = StateProvider((ref) => 0);
+// Fake websocket
+abstract class WebsocketClient {
+  Stream<int> getCounterStream();
+}
+
+class FakeWebsocketClient implements WebsocketClient {
+  @override
+  Stream<int> getCounterStream() async* {
+    int i = 0;
+    while (true) {
+      await Future.delayed(const Duration(milliseconds: 500));
+      yield i++;
+    }
+  }
+}
+
+final websocketClientProvider =
+    Provider<WebsocketClient>((ref) => FakeWebsocketClient());
+
+final counterProvider = StreamProvider<int>((ref) {
+  final wsClient = ref.watch(websocketClientProvider);
+  return wsClient.getCounterStream();
+});
 
 void main() => runApp(const ProviderScope(child: MyApp()));
 
@@ -58,55 +77,22 @@ class CounterPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final int counter = ref.watch(counterProvider);
-
-    ref.listen<int>(counterProvider, ((previous, next) {
-      if (next >= 5) {
-        showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: const Text('Warning'),
-                content: const Text(
-                    'Counter dangerously high. Consider resetting it.'),
-                actions: [
-                  TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text('OK'))
-                ],
-              );
-            });
-      }
-    }));
+    final AsyncValue<int> counter = ref.watch(counterProvider);
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Counter'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              // This is going to refresh the state of the provider
-              ref.invalidate(counterProvider);
-            },
-            icon: const Icon(Icons.refresh),
-          )
-        ],
       ),
       body: Center(
         child: Text(
-          counter.toString(),
+          counter
+              .when(
+                  data: (int value) => value,
+                  error: (Object e, _) => e,
+                  loading: () => 0)
+              .toString(),
           style: Theme.of(context).textTheme.displayMedium,
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () {
-          // ref.read will not rebuild anything
-          // notifier manages state
-          ref.read(counterProvider.notifier).state++;
-        },
       ),
     );
   }
