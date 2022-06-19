@@ -52,24 +52,30 @@ class HomePage extends StatelessWidget {
 }
 
 // use counter provider in this page
-class CounterPage extends StatelessWidget {
+class CounterPage extends ConsumerWidget {
   const CounterPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final int counter = ref.watch(counterProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Counter'),
       ),
       body: Center(
         child: Text(
-          0.toString(),
+          counter.toString(),
           style: Theme.of(context).textTheme.displayMedium,
         ),
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+          // ref.read will not rebuild anything
+          // notifier manages state
+          ref.read(counterProvider.notifier).state++;
+        },
       ),
     );
   }
