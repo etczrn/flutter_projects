@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // for complex thing, use state notifier
 // but for now, state provider is okay
+// autoDispose resets the state when the widget is removed from the tree
 final counterProvider = StateProvider((ref) => 0);
 
 void main() => runApp(const ProviderScope(child: MyApp()));
@@ -59,9 +60,39 @@ class CounterPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final int counter = ref.watch(counterProvider);
 
+    ref.listen<int>(counterProvider, ((previous, next) {
+      if (next >= 5) {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: const Text('Warning'),
+                content: const Text(
+                    'Counter dangerously high. Consider resetting it.'),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('OK'))
+                ],
+              );
+            });
+      }
+    }));
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Counter'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              // This is going to refresh the state of the provider
+              ref.invalidate(counterProvider);
+            },
+            icon: const Icon(Icons.refresh),
+          )
+        ],
       ),
       body: Center(
         child: Text(
