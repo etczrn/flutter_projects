@@ -14,6 +14,9 @@ class FakeWebsocketClient implements WebsocketClient {
       await Future.delayed(const Duration(milliseconds: 500));
       yield i++;
     }
+    // loading and error test
+    // await Future.delayed(const Duration(seconds: 2));
+    // throw Exception('Not implemented');
   }
 }
 
