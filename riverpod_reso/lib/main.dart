@@ -1,31 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// Fake websocket
 abstract class WebsocketClient {
-  Stream<int> getCounterStream();
+  Stream<int> getCounterStream([int start]);
 }
 
 class FakeWebsocketClient implements WebsocketClient {
   @override
-  Stream<int> getCounterStream() async* {
-    int i = 0;
+  Stream<int> getCounterStream([int start = 0]) async* {
+    int i = start;
     while (true) {
-      await Future.delayed(const Duration(milliseconds: 500));
       yield i++;
+      await Future.delayed(const Duration(milliseconds: 500));
     }
-    // loading and error test
-    // await Future.delayed(const Duration(seconds: 2));
-    // throw Exception('Not implemented');
   }
 }
 
 final websocketClientProvider =
     Provider<WebsocketClient>((ref) => FakeWebsocketClient());
 
-final counterProvider = StreamProvider<int>((ref) {
+// family<int, int>: first one is type of stream and the second one is type you want to pass in
+final counterProvider = StreamProvider.family<int, int>((ref, start) {
   final wsClient = ref.watch(websocketClientProvider);
-  return wsClient.getCounterStream();
+  return wsClient.getCounterStream(start);
 });
 
 void main() => runApp(const ProviderScope(child: MyApp()));
@@ -80,7 +77,7 @@ class CounterPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<int> counter = ref.watch(counterProvider);
+    final AsyncValue<int> counter = ref.watch(counterProvider(5));
 
     return Scaffold(
       appBar: AppBar(
