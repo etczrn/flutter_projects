@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'providers/providers.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:riverpod_example/home.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -16,27 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends ConsumerWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final userName = ref.watch(userNameProvider);
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
-      body: Center(
-        child: Text(userName),
-      ),
+      home: const Home(),
     );
   }
 }
