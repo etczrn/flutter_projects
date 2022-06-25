@@ -13,6 +13,7 @@ const app = express();
 const DB = `mongodb+srv://${process.env.DB_NAME}:${process.env.DB_PASS}@cluster0.z1asple.mongodb.net/?retryWrites=true&w=majority`;
 
 // Middleware
+app.use(express.json()); // for parsing application/json
 app.use(authRouter);
 
 // Connections
