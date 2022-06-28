@@ -44,6 +44,8 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.example.secure_storage"
+        // * Update minSdkVersion to use secure storage
+        // * In [project]/android/app/build.gradle set minSdkVersion to >= 18.
         minSdkVersion 18
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()

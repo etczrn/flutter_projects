@@ -1,8 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.secure_storage">
+    <!-- Apps targeting API level 23+ automatically back up almost all the data to Google Drive. -->
+    <!-- android:allowBackup="true" -->
    <application
         android:label="secure_storage"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:allowBackup="true" 
+        >
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
