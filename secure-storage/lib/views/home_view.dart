@@ -79,13 +79,16 @@ class _MyHomePageState extends State<MyHomePage> {
               Expanded(
                 child: ElevatedButton(
                   onPressed: () async {
+                    // * 1. newItem: added a nullable StorageItem object coming from the AddDataDialog widget
                     final StorageItem? newItem = await showDialog<StorageItem>(
                         context: context, builder: (_) => AddDataDialog());
                     if (newItem != null) {
+                      // * 2. Passed the newItem object into the writeSecureData method to write new data
                       _storageService.writeSecureData(newItem).then((value) {
                         setState(() {
                           _loading = true;
                         });
+                        // * 3. Used the initList method to fetch all the existing data from secure storage
                         initList();
                       });
                     }

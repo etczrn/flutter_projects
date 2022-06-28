@@ -29,6 +29,8 @@ class AddDataDialog extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                     onPressed: () {
+                      // * In the above code, you used the _keyController and _valueController controllers
+                      // * to create a new StorageItem object and return it to the home screen.
                       final StorageItem storageItem = StorageItem(
                           _keyController.text, _valueController.text);
                       Navigator.of(context).pop(storageItem);
