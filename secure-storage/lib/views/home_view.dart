@@ -15,6 +15,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  // * To use the SecureStorageService, initialize the StorageService instance:
   final StorageService _storageService = StorageService();
   late List<StorageItem> _items;
   bool _loading = true;
@@ -25,6 +26,10 @@ class _MyHomePageState extends State<MyHomePage> {
     initList();
   }
 
+  // * you are using the readAllSecureData method to update and set the list in the initState.
+  // * This will auto-update the home screen
+  // * if the data exits as we already have a ListView.builder widget
+  // * rendering each list item using the VaultCard widget.
   void initList() async {
     _items = await _storageService.readAllSecureData();
     _loading = false;
