@@ -38,9 +38,21 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text(
-          'Some text here 👍',
-          style: Theme.of(context).textTheme.headline4,
+        // * 1. Add a Consumer
+        child: Consumer(
+          // * 2. Specify the builder and obtain a WidgetRef
+          // * The Consumer's builder argument gives us a WidgetRef object
+          // * that we can use to watch the value of the provider.
+          // * Riverpod lets us access providers by reference, not by type.
+          // * This means that we can have as many providers as we want of the same type.
+          builder: (_, ref, __) {
+            // * 3. Use ref.watch() to get the value of the provider
+            final value = ref.watch(valueProvider);
+            return Text(
+              'Value: $value',
+              style: Theme.of(context).textTheme.headline4,
+            );
+          },
         ),
       ),
     );
