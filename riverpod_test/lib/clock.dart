@@ -2,21 +2,25 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// * This class sets the initial state in the constructor
-// * (by calling super(DateTime.now())),
-// * and updates the state every second using a periodic timer.
+// * In general, you should always think of StateNotifier
+// * as the place where your business logic goes:
+// *          read/write                                   ref.read(provider).method()
+// * Service <----------> Model(extends StateNotifier) <------------------------------- Widget
+// *                                                    ------------------------------>
+// *                                                           ref.watch(provider)
+// * When you setup things this way, your widgets can:
+// * - watch the model's state and rebuild when it changes.
+// * - call methods in your model classes (using ref.read(provider).someMethod()),
+// * which in turn can update the state and interact with external services if needed.
+
 class Clock extends StateNotifier<DateTime> {
-  // * 1. initialize with current time
   Clock() : super(DateTime.now()) {
-    // * 2. create a timer that fires every second
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      // * 3. update the state with the current time
       state = DateTime.now();
     });
   }
   late final Timer _timer;
 
-  // * 4. cancel the timer when finished
   @override
   void dispose() {
     _timer.cancel();
@@ -24,7 +28,6 @@ class Clock extends StateNotifier<DateTime> {
   }
 }
 
-// * Once we have Clock class, we can create a new provider:
 final clockProvider = StateNotifierProvider<Clock, DateTime>((ref) {
   return Clock();
 });
