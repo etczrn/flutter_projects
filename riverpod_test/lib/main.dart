@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -45,6 +46,27 @@ final futureProvider = FutureProvider.autoDispose<int>((ref) {
 final streamProvider = StreamProvider.autoDispose<int>((ref) {
   // return Stream.fromIterable([36, 72]);
   return Stream.periodic(const Duration(seconds: 1), (i) => 36 + i);
+});
+
+// * When we're using FutureProvider as a wrapper for an HTTP request
+// * that fires when the user enters a new screen.
+// * And we want to cancel the HTTP request if the user leaves the screen
+// * before the request is completed.
+// * In this scenario, we can use ref.onDispose()
+// * to perform some custom cancellation logic:
+final myProvider = FutureProvider.autoDispose((ref) async {
+  // * An object from package:dio that allows cancelling http requests
+  final cancelToken = CancelToken();
+  // * When the provider is destroyed, cancel the http request
+  ref.onDispose(() => cancelToken.cancel());
+
+  final dio = Dio();
+  // * Fetch our data and pass our `cancelToken` for cancellation to work
+  final response = await dio.get('path', cancelToken: cancelToken);
+  // *  If the request completed successfully, keep the state
+  ref.maintainState = true;
+
+  return response;
 });
 
 class MyHomePage extends ConsumerWidget {
