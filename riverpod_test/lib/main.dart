@@ -35,26 +35,33 @@ final counterStateProvider = StateProvider<int>((ref) {
   return 0;
 });
 
+final futureProvider = FutureProvider<int>((ref) {
+  return Future.value(36);
+});
+
+final streamProvider = StreamProvider<int>((ref) {
+  // return Stream.fromIterable([36, 72]);
+  return Stream.periodic(const Duration(seconds: 1), (i) => 36 + i);
+});
+
 class MyHomePage extends ConsumerWidget {
   const MyHomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // * to get an instance of the clock itself,
-    // * call `ref.watch(clockProvider.notifier)`
-    // final clock = ref.watch(clockProvider.notifier);
-
-    // * ref.watch(clockProvider) returns the provider's state.
-    // * This line is used to watch the provider's *state*
-    final currentTime = ref.watch(clockProvider);
-    // format the time as `hh:mm:ss`
-    final timeFormatted = DateFormat.Hms().format(currentTime);
+    // * When we watch a FutureProvider or StreamProvider we get an AsyncValue<T>,
+    // * a class used to safely manipulate asynchronous data.
+    final streamAsyncValue = ref.watch(streamProvider);
+    // final futureAsyncValue = ref.watch(futureProvider); // same syntax
 
     return Scaffold(
       body: Center(
-        child: Text(
-          timeFormatted,
-          style: Theme.of(context).textTheme.headline4,
+        // * And then we can use the when() method to map the
+        // * data, loading, and error states to different widgets:
+        child: streamAsyncValue.when(
+          data: (data) => Text('Value: $data'),
+          error: (error, stack) => Text('Error: $error'),
+          loading: () => const CircularProgressIndicator(),
         ),
       ),
     );
