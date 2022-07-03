@@ -31,28 +31,20 @@ final valueProvider = Provider<int>((ref) {
   return 36;
 });
 
-class MyHomePage extends StatelessWidget {
+// * 1. Widget class now extends [ConsumerWidget]
+class MyHomePage extends ConsumerWidget {
   const MyHomePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  // * 2. build() method has an extra [WidgetRef] argument
+  Widget build(BuildContext context, WidgetRef ref) {
+    // * 3. use ref.watch() to get the value of the provider
+    final value = ref.watch(valueProvider);
     return Scaffold(
       body: Center(
-        // * 1. Add a Consumer
-        child: Consumer(
-          // * 2. Specify the builder and obtain a WidgetRef
-          // * The Consumer's builder argument gives us a WidgetRef object
-          // * that we can use to watch the value of the provider.
-          // * Riverpod lets us access providers by reference, not by type.
-          // * This means that we can have as many providers as we want of the same type.
-          builder: (_, ref, __) {
-            // * 3. Use ref.watch() to get the value of the provider
-            final value = ref.watch(valueProvider);
-            return Text(
-              'Value: $value',
-              style: Theme.of(context).textTheme.headline4,
-            );
-          },
+        child: Text(
+          '$value',
+          style: Theme.of(context).textTheme.headline4,
         ),
       ),
     );
