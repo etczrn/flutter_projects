@@ -31,8 +31,6 @@ final valueProvider = Provider<int>((ref) {
   return 36;
 });
 
-// * Provider itself doesn't give us any capability to change its value.
-// * For that we need to create a StateProvider:
 final counterStateProvider = StateProvider<int>((ref) {
   return 0;
 });
@@ -42,22 +40,30 @@ class MyHomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // * 1. watch the counterStateProvider
     final counter = ref.watch(counterStateProvider);
+
+    // * In this case, the callback gives us a StateController<int> argument
+    // * that represents the new state of our provider,
+    // * and we can use it to show a SnackBar.
+    ref.listen<StateController<int>>(counterStateProvider.state,
+        (previous, current) {
+      // * Note: this callback executes when the provider value changes,
+      // * not when the build method is called
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Value is ${current.state}'),
+        ),
+      );
+    });
 
     return Scaffold(
       body: Center(
         child: Text(
-          // * 2. use the counter value
           'Value: $counter',
           style: Theme.of(context).textTheme.headline4,
         ),
       ),
-      // * To verify that our code works,
-      // * we can add a floatingActionButton argument to our Scaffold:
       floatingActionButton: FloatingActionButton(
-        // * We should always use ref.read() rather than ref.watch()
-        // * to access providers inside a callback.
         onPressed: () => ref.read(counterStateProvider.state).state++,
         child: const Icon(Icons.add),
       ),
