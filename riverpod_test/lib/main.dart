@@ -35,11 +35,14 @@ final counterStateProvider = StateProvider<int>((ref) {
   return 0;
 });
 
-final futureProvider = FutureProvider<int>((ref) {
+// * If we're working with FutureProvider or StreamProvider,
+// * we'll want to dispose of any listeners when our provider is no longer in use.
+// * This is easily done by adding an .autoDispose modifier to our provider:
+final futureProvider = FutureProvider.autoDispose<int>((ref) {
   return Future.value(36);
 });
 
-final streamProvider = StreamProvider<int>((ref) {
+final streamProvider = StreamProvider.autoDispose<int>((ref) {
   // return Stream.fromIterable([36, 72]);
   return Stream.periodic(const Duration(seconds: 1), (i) => 36 + i);
 });
