@@ -31,43 +31,35 @@ final valueProvider = Provider<int>((ref) {
   return 36;
 });
 
-// * 1. Extend [ConsumerStatefulWidget]
-class MyHomePage extends ConsumerStatefulWidget {
+// * Provider itself doesn't give us any capability to change its value.
+// * For that we need to create a StateProvider:
+final counterStateProvider = StateProvider<int>((ref) {
+  return 0;
+});
+
+class MyHomePage extends ConsumerWidget {
   const MyHomePage({Key? key}) : super(key: key);
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-// * 2. Extend [ConsumerState]
-class _MyHomePageState extends ConsumerState<MyHomePage> {
-  @override
-  void initState() {
-    super.initState();
-    // * If we need to read the provider value
-    // * in any of the other widget life-cycle methods, we can use ref.read().
-
-    // * 3. use ref.read() in the widget life-cycle methods
-    final value = ref.read(valueProvider);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // * Note how the build() method only gives us a BuildContext
-    // * when we subclass from ConsumerState, but we can still access the ref object.
-    // * This is because ConsumerState declares WidgetRef as a property,
-    // * much like the Flutter State class declares BuildContext as a property
-    // * that can be accessed directly inside all the widget life-cycle methods.
-
-    // * 3. use ref.watch() to get the value of the provider
-    final value = ref.watch(valueProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    // * 1. watch the counterStateProvider
+    final counter = ref.watch(counterStateProvider);
 
     return Scaffold(
       body: Center(
         child: Text(
-          '$value',
+          // * 2. use the counter value
+          'Value: $counter',
           style: Theme.of(context).textTheme.headline4,
         ),
+      ),
+      // * To verify that our code works,
+      // * we can add a floatingActionButton argument to our Scaffold:
+      floatingActionButton: FloatingActionButton(
+        // * We should always use ref.read() rather than ref.watch()
+        // * to access providers inside a callback.
+        onPressed: () => ref.read(counterStateProvider.state).state++,
+        child: const Icon(Icons.add),
       ),
     );
   }
