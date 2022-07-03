@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
+import 'package:riverpod_test/clock.dart';
 
 void main() {
-  // * Wrap our root widget with a ProviderScope.
-  // * ProviderScope is a widget that stores the state of all the providers we create.
   runApp(
     const ProviderScope(
       child: MyApp(),
@@ -40,32 +40,22 @@ class MyHomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final counter = ref.watch(counterStateProvider);
+    // * to get an instance of the clock itself,
+    // * call `ref.watch(clockProvider.notifier)`
+    // final clock = ref.watch(clockProvider.notifier);
 
-    // * In this case, the callback gives us a StateController<int> argument
-    // * that represents the new state of our provider,
-    // * and we can use it to show a SnackBar.
-    ref.listen<StateController<int>>(counterStateProvider.state,
-        (previous, current) {
-      // * Note: this callback executes when the provider value changes,
-      // * not when the build method is called
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Value is ${current.state}'),
-        ),
-      );
-    });
+    // * ref.watch(clockProvider) returns the provider's state.
+    // * This line is used to watch the provider's *state*
+    final currentTime = ref.watch(clockProvider);
+    // format the time as `hh:mm:ss`
+    final timeFormatted = DateFormat.Hms().format(currentTime);
 
     return Scaffold(
       body: Center(
         child: Text(
-          'Value: $counter',
+          timeFormatted,
           style: Theme.of(context).textTheme.headline4,
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => ref.read(counterStateProvider.state).state++,
-        child: const Icon(Icons.add),
       ),
     );
   }
