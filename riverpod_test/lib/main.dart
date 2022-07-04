@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod_test/clock.dart';
+import 'package:riverpod_test/detail.dart';
 
 void main() {
   runApp(
@@ -23,7 +24,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      home: const MyHomePage(),
+      // home: const MyHomePage(),
+      home: const DetailScreen(),
     );
   }
 }
