@@ -4,7 +4,7 @@ import 'package:community/models/comment.dart';
 import 'package:http/http.dart' as http;
 
 abstract class ICommentRepository {
-  Future<List<Comment>> getComments();
+  Future<List<Comment>> getComments(String id);
 }
 
 class CommentRepository implements ICommentRepository {
@@ -15,7 +15,7 @@ class CommentRepository implements ICommentRepository {
   };
 
   @override
-  Future<List<Comment>> getComments() async {
+  Future<List<Comment>> getComments(String postId) async {
     final url = '$_baseUrl/comments';
     final response = await http.get(Uri.parse(url), headers: _headers);
     final json = jsonDecode(response.body);

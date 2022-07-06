@@ -5,9 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final commentRepositoryProvider =
     Provider<ICommentRepository>((ref) => CommentRepository());
 
-final getCommentsProvider =
-    FutureProvider.autoDispose<List<Comment>>((ref) async {
+final getCommentsProvider = FutureProvider.autoDispose
+    .family<List<Comment>, String>((ref, String postId) async {
   final repository = ref.watch(commentRepositoryProvider);
 
-  return repository.getComments();
+  return repository.getComments(postId);
 });

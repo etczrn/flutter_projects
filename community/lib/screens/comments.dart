@@ -1,7 +1,6 @@
 import 'package:community/providers/comment.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:http/http.dart';
 
 class CommentsScreen extends StatelessWidget {
   const CommentsScreen({Key? key}) : super(key: key);
@@ -26,12 +25,13 @@ class CommentList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final comments = ref.watch(getCommentsProvider);
+    const postId = 'fake-post-id';
+    final comments = ref.watch(getCommentsProvider(postId));
 
     return comments.when(
       data: (data) => Expanded(
         child: RefreshIndicator(
-          onRefresh: () async => ref.refresh(getCommentsProvider),
+          onRefresh: () async => ref.refresh(getCommentsProvider(postId)),
           child: ListView.separated(
             physics: const AlwaysScrollableScrollPhysics(),
             itemBuilder: (context, idx) => Padding(
