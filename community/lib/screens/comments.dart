@@ -1,6 +1,7 @@
 import 'package:community/providers/comment.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart';
 
 class CommentsScreen extends StatelessWidget {
   const CommentsScreen({Key? key}) : super(key: key);
@@ -11,7 +12,11 @@ class CommentsScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Comments'),
       ),
-      body: const CommentList(),
+      body: Column(
+        children: const [
+          CommentList(),
+        ],
+      ),
     );
   }
 }
@@ -21,15 +26,22 @@ class CommentList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final commentsList = ref.watch(getCommentsProvider);
-    return commentsList.when(
-      data: (comments) => ListView.separated(
-        itemBuilder: (context, idx) => Padding(
-          padding: const EdgeInsets.all(8),
-          child: Text(comments[idx].content),
+    final comments = ref.watch(getCommentsProvider);
+
+    return comments.when(
+      data: (data) => Expanded(
+        child: RefreshIndicator(
+          onRefresh: () async => ref.refresh(getCommentsProvider),
+          child: ListView.separated(
+            physics: const AlwaysScrollableScrollPhysics(),
+            itemBuilder: (context, idx) => Padding(
+              padding: const EdgeInsets.all(8),
+              child: Text(data[idx].content),
+            ),
+            separatorBuilder: (_, __) => const Divider(),
+            itemCount: data.length,
+          ),
         ),
-        separatorBuilder: (_, __) => const Divider(),
-        itemCount: comments.length,
       ),
       loading: () => const Center(
         child: CircularProgressIndicator(),
